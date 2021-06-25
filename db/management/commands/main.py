@@ -30,9 +30,9 @@ from telegram.utils.request import Request
 from django.utils import timezone
 from db.models import Profile
 
-GIVEN_ID = 403839849
+#GIVEN_ID = 403839849
 
-# GIVEN_ID = -1001192018710
+GIVEN_ID = -1001192018710
 
 import logging
 
@@ -103,7 +103,7 @@ class Command(BaseCommand):
         try:
             now2 = timezone.now()
             date2 = datetime.datetime(now2.year, now2.month, now2.day)
-            next_d = date2.replace(hour=23, minute=25, second=0)
+            next_d = date2.replace(hour=9, minute=0, second=0)
             Schedule.objects.update_or_create(
                 func='db.management.commands.main.remind_duty',
                 defaults={

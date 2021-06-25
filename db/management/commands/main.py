@@ -30,9 +30,9 @@ from telegram.utils.request import Request
 from django.utils import timezone
 from db.models import Profile
 
-GIVEN_ID = 403839849
+# GIVEN_ID = 403839849
 
-#GIVEN_ID = -1001192018710
+GIVEN_ID = -1001192018710
 
 import logging
 
@@ -40,8 +40,11 @@ logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 
-def start(update, context):
-    context.bot.send_message(chat_id=update.effective_chat.id, text="I'm a bot, please talk to me!")
+def duty(update, context):
+    context.bot.send_message(
+        chat_id=update.effective_chat.id, 
+        text=f"Navbatchining vazifalari quyidagilardan iborat!\n"\
+            f"https://telegra.ph/Navbatchi-Vazifalari-06-24")
 
 
 def remind_duty():
@@ -61,7 +64,7 @@ def remind_duty():
         p = Profile.objects.order_by('duty').first()
         prev_date_of_profile = p.duty.strftime('%m/%d/%y')
         p.duty = p.duty.strptime(prev_date_of_profile, '%m/%d/%y') + datetime.timedelta(days=7)
-        if datetime.datetime.now().strftime("%H:%M") >= "00:00":
+        if datetime.datetime.now().strftime("%H:%M") >= "23:55":
             p.save()
         print('here')
         message = f"Bugun, {p}\n" \
@@ -130,7 +133,7 @@ class Command(BaseCommand):
         dispatcher = updater.dispatcher
         today_duty_handler = CommandHandler('today', todays_duty)
         next_handler = CommandHandler('next', tomorrow_duty)
-        start_handler = CommandHandler('start', start)
+        start_handler = CommandHandler('duty', duty)
 
         dispatcher.add_handler(start_handler)
         dispatcher.add_handler(today_duty_handler)

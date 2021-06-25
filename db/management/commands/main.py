@@ -30,9 +30,9 @@ from telegram.utils.request import Request
 from django.utils import timezone
 from db.models import Profile
 
-#GIVEN_ID = 403839849
+GIVEN_ID = 403839849
 
-GIVEN_ID = -1001192018710
+#GIVEN_ID = -1001192018710
 
 import logging
 
@@ -90,7 +90,7 @@ def tomorrow_duty(update: Update, context: CallbackContext):
         cur_duty = next_one.duty.strftime('%m/%d/%y')
         next_one.duty = next_one.duty.strptime(cur_duty, '%m/%d/%y') + datetime.timedelta(days=7)
         next_one.save()
-        text = f"Ertaga, {next_one}"
+        text = f"{p} yo'qligi sabab, Yangi {next_one}"
     else:
         text = f"Bugun Yakshanbaku!"
     update.message.reply_text(text=text, parse_mode=ParseMode.HTML)
